@@ -1,8 +1,7 @@
-from .models import Number
 import os
-from twilio.rest import Client
 
 from celery import shared_task
+from twilio.rest import Client
 
 
 @shared_task

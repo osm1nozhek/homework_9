@@ -1,9 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-from twilio.rest import Client
 from django.shortcuts import render
+from django.urls import reverse
+
 from .forms import NumberForm
-from .models import Number
 from .tasks import send_messages
 
 
@@ -12,7 +11,7 @@ def add_number(request):
         form = NumberForm(request.POST)
         if form.is_valid():
             form.save()
-            message = Number.objects.values("number").last().get("number")
+            message = form.cleaned_data["number"]
 
             send_messages.delay(message)
 
